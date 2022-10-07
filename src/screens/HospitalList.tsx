@@ -1,4 +1,4 @@
-import {View, FlatList, StyleSheet, Alert, Text} from 'react-native';
+import {View, FlatList, StyleSheet, Alert} from 'react-native';
 import React from 'react';
 
 import {MainNavProps} from '../navigation/MainNav';
@@ -7,7 +7,6 @@ import {useAppDispatch, useAppSelector} from '../hooks/useRedux';
 import {IHospital} from '../types/hospitalTypes';
 import {setDeleteHospital} from '../store/slices/hospitalSlice';
 import {Spinner} from '../components/Spinner';
-import {defaultColors} from '../theme/colors';
 
 export const HospitalList = (props: MainNavProps<'Hospitals'>) => {
   const hospitalsList = useAppSelector(store => store.hospitals);
@@ -18,6 +17,7 @@ export const HospitalList = (props: MainNavProps<'Hospitals'>) => {
   // this could be a stand alone custom component
   const confirmDelete = (id: number) => {
     Alert.alert('Are you sure?', 'You going to delete your record', [
+      // can't come up with some better text -)
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
@@ -62,7 +62,6 @@ export const HospitalList = (props: MainNavProps<'Hospitals'>) => {
         <DefaultEmptyList />
       ) : (
         <FlatList
-          // contentContainerStyle={{flex: 1}}
           showsVerticalScrollIndicator={false}
           data={hospitalsList}
           renderItem={renderItem}
