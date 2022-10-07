@@ -7,7 +7,10 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "deps:nuke": "rm -rf node_modules/ && rm -rf ios/Pods/",
+    "deps:add": "yarn && npx pod-install",
+    "deps:reset": "yarn deps:nuke && yarn deps:add"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",

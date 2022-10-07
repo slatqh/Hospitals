@@ -57,9 +57,10 @@ export const HospitalCard = (props: ICard) => {
 const styles = StyleSheet.create({
   cardContainer: {
     borderColor: defaultColors.primary,
-    borderWidth: 1,
+    borderWidth: 1.3,
     borderRadius: 8,
     marginTop: 10,
+    backgroundColor: 'white',
   },
   icon: {
     height: 20,

@@ -113,7 +113,6 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
             <TextInput
               label="Address"
               placeholder={'Enter hospital address'}
-              autoFocus
               maxLength={40}
               onChangeText={e => {
                 onChange(e);

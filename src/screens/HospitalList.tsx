@@ -6,14 +6,20 @@ import {HospitalCard, Header} from '../components';
 import {useAppDispatch, useAppSelector} from '../hooks/useRedux';
 import {IHospital} from '../types/hospitalTypes';
 import {setDeleteHospital} from '../store/slices/hospitalSlice';
+import {Spinner} from '../components/Spinner';
 
 export const HospitalList = (props: MainNavProps<'Hospitals'>) => {
   const hospitalsList = useAppSelector(store => store.hospitals);
   const {navigation} = props;
   const dispatch = useAppDispatch(setDeleteHospital);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const onDelete = (id: number) => {
-    dispatch(setDeleteHospital(id));
+    setIsLoading(true);
+    setTimeout(() => {
+      dispatch(setDeleteHospital(id));
+      setIsLoading(false);
+    }, 1000); // simulate api call
   };
 
   const onEdit = (item: IHospital) => {
@@ -40,16 +46,20 @@ export const HospitalList = (props: MainNavProps<'Hospitals'>) => {
         onRightButtonPress={() => navigation.navigate('HospitalDetals', {})}
       />
       <FlatList
+        // contentContainerStyle={{flex: 1}}
+        showsVerticalScrollIndicator={false}
         data={hospitalsList}
         renderItem={renderItem}
         keyExtractor={(item: IHospital, _) => item.id}
       />
+      <Spinner isLoading={isLoading} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingHorizontal: 15,
   },
 });
