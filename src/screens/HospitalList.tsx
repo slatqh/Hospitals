@@ -3,16 +3,19 @@ import React from 'react';
 
 import {MainNavProps} from '../navigation/MainNav';
 import {HospitalCard, Header} from '../components';
-import {useAppSelector} from '../hooks/useRedux';
+import {useAppDispatch, useAppSelector} from '../hooks/useRedux';
 import {IHospital} from '../types/hospitalTypes';
+import {setDeleteHospital} from '../store/slices/hospitalSlice';
 
 export const HospitalList = (props: MainNavProps<'Hospitals'>) => {
   const hospitalsList = useAppSelector(store => store.hospitals);
   const {navigation} = props;
-  console.log('hospitalsList', hospitalsList);
+  const dispatch = useAppDispatch(setDeleteHospital);
   React.useEffect(() => {}, []);
 
-  const onDelete = item => {};
+  const onDelete = (id: number) => {
+    dispatch(setDeleteHospital(id));
+  };
 
   const onEdit = (item: IHospital) => {
     navigation.navigate('HospitalDetals', {

@@ -38,7 +38,6 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
     },
   });
 
-  console.log(hospitalToEdit);
   const goBack = () => {
     navigation.goBack();
   };
@@ -51,9 +50,9 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
         info: additionalInfo,
       };
 
-      console.log('ARGS', args);
-      dispatch(setHospital(args));
+      dispatch(setHospital({...args, id: hospitalToEdit?.id}));
       setIsloading(false);
+      navigation.goBack();
     }, 1000);
   });
   return (

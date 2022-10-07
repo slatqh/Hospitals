@@ -18,22 +18,36 @@ const hospitalSlice = createSlice({
   initialState: hospitalState,
   reducers: {
     setHospital(state: IHospitalsState, {payload}: PayloadAction<IHospital>) {
-      const hospital = {
+      const newHospital = {
         id: Date.now(),
         name: payload.name,
         address: payload.address,
         info: payload.info,
       };
-      state.hospitals.push(hospital);
+
+      if (payload.id !== undefined) {
+        state.hospitals.forEach((hospital: IHospital) => {
+          if (hospital.id === payload.id) {
+            hospital.address = payload.address;
+            hospital.name = payload.name;
+            hospital.info = payload.info;
+          }
+        });
+      } else {
+        state.hospitals.push(newHospital);
+      }
     },
     setEditHospital(state: IHospitalsState, {payload}: PayloadAction<string>) {
       state.hospitalId = payload;
     },
     setDeleteHospital(
       state: IHospitalsState,
-      {payload}: PayloadAction<string>,
+      {payload}: PayloadAction<number>,
     ) {
-      state.hospitalId = payload;
+      const deleteHospital = state.hospitals.filter(
+        item => item.id !== payload,
+      );
+      state.hospitals = deleteHospital;
     },
   },
 });
