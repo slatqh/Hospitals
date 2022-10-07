@@ -4,13 +4,18 @@ import {TextInput} from 'react-native-paper';
 
 const BaseTextInput = (props: any) => {
   const [text, setText] = React.useState('');
-
+  const handleTextChange = () => {
+    if (typeof props.onChangeText === 'function') {
+      setText(text);
+      props.onChangeText(text);
+    }
+  };
   return (
     <TextInput
       autoCorrect={false}
       mode="outlined"
       value={text}
-      onChangeText={(input: string) => setText(input)}
+      onChangeText={handleTextChange}
       style={[styles(props.multiline).textInput, props.style]}
       {...props}
     />

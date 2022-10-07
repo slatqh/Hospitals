@@ -7,5 +7,5 @@ export const ErrorText = (props: {text: string | undefined}) => {
 };
 
 const styles = StyleSheet.create({
-  text: {color: '#a51f1e', fontSize: 16, paddingTop: 8},
+  text: {color: '#a51f1e', fontSize: 16, paddingVertical: 5},
 });

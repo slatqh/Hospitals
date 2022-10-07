@@ -1,13 +1,14 @@
-import {MD3LightTheme as DefaultTheme} from 'react-native-paper';
+import {DefaultTheme as PaperTheme} from 'react-native-paper';
 
-const lightTheme: Partial<typeof DefaultTheme> = {
+const lightTheme = {
   roundness: 10,
   colors: {
-    ...DefaultTheme,
+    ...PaperTheme,
     primary: '#085df8',
     secondary: '#085df8',
     error: '#a51f1e',
     background: '#f5f5f5',
+    disabledButton: '#D7DADB',
   },
 };
 
