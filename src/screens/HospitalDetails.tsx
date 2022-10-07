@@ -17,6 +17,12 @@ interface FormData {
   additionalInfo?: string;
 }
 
+/**
+ * Hospital Details.
+ * @type {HospitalDetails}
+ * @param {string} - It's stil room for improvment, like we can add AvoidKeyboard in case we need more TextInputs fields
+ * and of couse better colors, font-family and general design -)
+ */
 export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
   const [additionalInfo, setAdditionalInfo] = React.useState('');
   const [isLoading, setIsloading] = React.useState(false);
