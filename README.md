@@ -6,3 +6,4 @@ Before you run a project do `yarn && npx pod-install`
   -   `yarn run ios`
 ## To start project on Android
   - `yarn run android`
+App save records locally, and simulate api calls.  
