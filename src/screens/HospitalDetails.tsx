@@ -8,6 +8,8 @@ import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch} from '../hooks/useRedux';
 import {setHospitalOrEdit} from '../store/slices/hospitalSlice';
 import {MainNavProps} from '../navigation/MainNav';
+import {defaultColors} from '../theme/colors';
+import {Spinner} from '../components/Spinner';
 
 interface FormData {
   name: string;
@@ -16,13 +18,13 @@ interface FormData {
 }
 
 export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
-  const [isError, setIsError] = React.useState(false);
   const [additionalInfo, setAdditionalInfo] = React.useState('');
   const [isLoading, setIsloading] = React.useState(false);
   const {params} = props.route;
   const hospitalToEdit = params?.hospitalToEdit
     ? params?.hospitalToEdit
     : undefined;
+
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const {
@@ -34,16 +36,24 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
     defaultValues: {
       name: hospitalToEdit?.name ?? '',
       address: hospitalToEdit?.address ?? '',
-      additionalInfo: hospitalToEdit?.info ?? '',
     },
   });
+
+  React.useEffect(() => {
+    // example how we can handle editing in plain RN without react-form
+    if (hospitalToEdit && hospitalToEdit?.info) {
+      setAdditionalInfo(hospitalToEdit.info);
+    }
+  }, []);
 
   const goBack = () => {
     navigation.goBack();
   };
+
   const handleSave = handleSubmit(async inputs => {
     setIsloading(true);
     setTimeout(() => {
+      // simulate api call
       const args = {
         name: inputs.name,
         address: inputs.address,
@@ -55,6 +65,7 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
       navigation.goBack();
     }, 1000);
   });
+
   return (
     <View style={styles.container}>
       <Header
@@ -75,10 +86,10 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
               placeholder={'Enter hospital name'}
               autoFocus
               maxLength={40}
-              onChangeText={e => {
+              onChangeText={(e: string) => {
                 onChange(e);
-                setIsError(false);
               }}
+              required
               value={value}
               error={Boolean(error && isTouched)}
               disabled={isSubmitting}
@@ -114,10 +125,10 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
               label="Address"
               placeholder={'Enter hospital address'}
               maxLength={40}
-              onChangeText={e => {
+              onChangeText={(e: string) => {
                 onChange(e);
-                setIsError(false);
               }}
+              required
               value={value}
               error={Boolean(error && isTouched)}
               disabled={isSubmitting}
@@ -132,6 +143,10 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
             required: {
               value: true,
               message: 'Hospital address required',
+            },
+            minLength: {
+              value: 5,
+              message: 'Address should be more then 5 characters',
             },
           }}
         />
@@ -150,16 +165,22 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
         </View>
       </View>
 
-      {isValid && (
-        <Button
-          mode="contained"
-          style={styles.button}
-          onPress={handleSave}
-          loading={isLoading}
-          textColor="white">
-          Save
-        </Button>
-      )}
+      <Button
+        mode="contained"
+        disabled={!isValid ? true : false}
+        style={[
+          styles.button,
+          {
+            backgroundColor: isValid
+              ? defaultColors.primary
+              : defaultColors.disabledButton,
+          },
+        ]}
+        onPress={handleSave}
+        loading={isLoading}>
+        Save
+      </Button>
+      <Spinner isLoading={isLoading} />
     </View>
   );
 };

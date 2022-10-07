@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {TextInput} from 'react-native-paper';
+import {defaultColors} from '../theme/colors';
 
 const BaseTextInput = (props: any) => {
   const [text, setText] = React.useState('');
@@ -18,6 +19,14 @@ const BaseTextInput = (props: any) => {
       onChangeText={handleTextChange}
       style={[styles(props.multiline).textInput, props.style]}
       {...props}
+      label={
+        props.required ? (
+          <Text>
+            {props.label}
+            <Text style={[styles(props.multiline).required]}> *</Text>
+          </Text>
+        ) : null
+      }
     />
   );
 };
@@ -27,16 +36,8 @@ const styles = (multiline: boolean | undefined) =>
     textInput: {
       height: multiline ? 160 : undefined,
     },
+    required: {
+      color: defaultColors.error,
+    },
   });
 export default BaseTextInput;
-
-// primary: string;
-// background: string;
-// surface: string;
-// accent: string;
-// error: string;
-// text: string;
-// onSurface: string;
-// disabled: string;
-// placeholder: string;
-// backdrop: string;

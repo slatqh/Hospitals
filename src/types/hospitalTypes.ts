@@ -1,5 +1,5 @@
 export interface IHospital {
-  id: number;
+  id: number | undefined;
   name: string;
   address: string;
   info?: string;

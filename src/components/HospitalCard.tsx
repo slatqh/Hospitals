@@ -43,7 +43,7 @@ export const HospitalCard = (props: ICard) => {
   return (
     <View key={id} style={styles.cardContainer}>
       <View>
-        <ItemDetails label="Name" value={name?.toUpperCase()} />
+        <ItemDetails label="Name" value={name} />
         <ItemDetails label="Address" value={address} />
         <ItemDetails label="Information" value={info} />
       </View>
