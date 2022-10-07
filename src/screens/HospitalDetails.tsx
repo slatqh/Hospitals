@@ -6,7 +6,7 @@ import {Controller, useForm} from 'react-hook-form';
 import {Header} from '../components/Header';
 import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch} from '../hooks/useRedux';
-import {setHospital} from '../store/slices/hospitalSlice';
+import {setHospitalOrEdit} from '../store/slices/hospitalSlice';
 import {MainNavProps} from '../navigation/MainNav';
 
 interface FormData {
@@ -50,7 +50,7 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
         info: additionalInfo,
       };
 
-      dispatch(setHospital({...args, id: hospitalToEdit?.id}));
+      dispatch(setHospitalOrEdit({...args, id: hospitalToEdit?.id}));
       setIsloading(false);
       navigation.goBack();
     }, 1000);

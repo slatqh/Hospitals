@@ -1,4 +1,4 @@
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import React from 'react';
 
 import {MainNavProps} from '../navigation/MainNav';
@@ -11,7 +11,6 @@ export const HospitalList = (props: MainNavProps<'Hospitals'>) => {
   const hospitalsList = useAppSelector(store => store.hospitals);
   const {navigation} = props;
   const dispatch = useAppDispatch(setDeleteHospital);
-  React.useEffect(() => {}, []);
 
   const onDelete = (id: number) => {
     dispatch(setDeleteHospital(id));
@@ -38,7 +37,7 @@ export const HospitalList = (props: MainNavProps<'Hospitals'>) => {
         title={'Add'}
         enabled
         hideLeftButton
-        onRightButtonPress={() => navigation.navigate('HospitalDetals')}
+        onRightButtonPress={() => navigation.navigate('HospitalDetals', {})}
       />
       <FlatList
         data={hospitalsList}

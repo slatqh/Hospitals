@@ -17,7 +17,10 @@ const hospitalSlice = createSlice({
   name: 'hospitals',
   initialState: hospitalState,
   reducers: {
-    setHospital(state: IHospitalsState, {payload}: PayloadAction<IHospital>) {
+    setHospitalOrEdit(
+      state: IHospitalsState,
+      {payload}: PayloadAction<IHospital>,
+    ) {
       const newHospital = {
         id: Date.now(),
         name: payload.name,
@@ -37,9 +40,7 @@ const hospitalSlice = createSlice({
         state.hospitals.push(newHospital);
       }
     },
-    setEditHospital(state: IHospitalsState, {payload}: PayloadAction<string>) {
-      state.hospitalId = payload;
-    },
+
     setDeleteHospital(
       state: IHospitalsState,
       {payload}: PayloadAction<number>,
@@ -52,6 +53,5 @@ const hospitalSlice = createSlice({
   },
 });
 
-export const {setHospital, setEditHospital, setDeleteHospital} =
-  hospitalSlice.actions;
+export const {setHospitalOrEdit, setDeleteHospital} = hospitalSlice.actions;
 export default hospitalSlice.reducer;

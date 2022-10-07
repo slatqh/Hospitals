@@ -13,7 +13,7 @@ export enum MainNav {
   HOSPITALS_DETAILS = 'HospitalDetals',
 }
 export type MainNavParamList = {
-  Hospitals: {};
+  Hospitals: undefined;
   HospitalDetals: {
     hospitalToEdit?: IHospital;
   };
