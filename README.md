@@ -1,5 +1,5 @@
 # Hospitals App
-   Mobile app to view, edit or delete Hospital records. 
+   Hospital App, is Mobile app to view, edit or delete Hospital records. 
    As extra feature, all records saved locally, so you can close the App, records will be persist. 
 
 Before you run a project do `yarn && npx pod-install`
