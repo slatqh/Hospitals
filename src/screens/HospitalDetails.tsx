@@ -1,10 +1,13 @@
 import {View, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import React from 'react';
-import {MainNavProps} from '../navigation/MainNav';
 import {ErrorText, TextInput} from '../components';
 import {Controller, useForm} from 'react-hook-form';
 import {Header} from '../components/Header';
+import {useNavigation} from '@react-navigation/native';
+import {useAppDispatch} from '../hooks/useRedux';
+import {setHospital} from '../store/slices/hospitalSlice';
+import {MainNavProps} from '../navigation/MainNav';
 
 interface FormData {
   name: string;
@@ -16,6 +19,12 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
   const [isError, setIsError] = React.useState(false);
   const [additionalInfo, setAdditionalInfo] = React.useState('');
   const [isLoading, setIsloading] = React.useState(false);
+  const {params} = props.route;
+  const hospitalToEdit = params?.hospitalToEdit
+    ? params?.hospitalToEdit
+    : undefined;
+  const dispatch = useAppDispatch();
+  const navigation = useNavigation();
   const {
     control,
     handleSubmit,
@@ -23,29 +32,38 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
   } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: {
-      name: '',
-      address: '',
-      additionalInfo: '',
+      name: hospitalToEdit?.name ?? '',
+      address: hospitalToEdit?.address ?? '',
+      additionalInfo: hospitalToEdit?.info ?? '',
     },
   });
-  const {navigation} = props;
 
+  console.log(hospitalToEdit);
+  const goBack = () => {
+    navigation.goBack();
+  };
   const handleSave = handleSubmit(async inputs => {
     setIsloading(true);
     setTimeout(() => {
       const args = {
-        firstName: inputs.name,
-        lastName: inputs.address,
+        name: inputs.name,
+        address: inputs.address,
         info: additionalInfo,
       };
 
       console.log('ARGS', args);
+      dispatch(setHospital(args));
       setIsloading(false);
     }, 1000);
   });
   return (
     <View style={styles.container}>
-      <Header title={'Save'} enabled={isValid} onPress={handleSave} />
+      <Header
+        title={'Save'}
+        enabled={isValid}
+        onRightButtonPress={handleSave}
+        onArrowPress={goBack}
+      />
       <View style={styles.inputContainer}>
         <Controller
           control={control}
@@ -124,13 +142,14 @@ export const HospitalDetails = (props: MainNavProps<'HospitalDetals'>) => {
             <ErrorText text={errors?.address?.message} />
           )}
         </View>
-
-        <TextInput
-          label="Additional Info"
-          multiline
-          value={additionalInfo}
-          onChangeText={(e: string) => setAdditionalInfo(e)}
-        />
+        <View style={styles.info}>
+          <TextInput
+            label="Additional Info"
+            multiline
+            value={additionalInfo}
+            onChangeText={(e: string) => setAdditionalInfo(e)}
+          />
+        </View>
       </View>
 
       {isValid && (
@@ -160,5 +179,8 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 15,
+  },
+  info: {
+    marginTop: 28,
   },
 });

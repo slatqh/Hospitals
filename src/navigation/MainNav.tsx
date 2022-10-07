@@ -6,14 +6,17 @@ import {
 } from '@react-navigation/native-stack';
 
 import {HospitalDetails, HospitalList} from '../screens';
+import {IHospital} from '../types/hospitalTypes';
 
 export enum MainNav {
   HOSPITALS_LIST = 'Hospitals',
   HOSPITALS_DETAILS = 'HospitalDetals',
 }
 export type MainNavParamList = {
-  Hospitals: undefined;
-  HospitalDetals: undefined;
+  Hospitals: {};
+  HospitalDetals: {
+    hospitalToEdit?: IHospital;
+  };
 };
 export type MainNavProps<T extends keyof MainNavParamList> = {
   navigation: NativeStackNavigationProp<MainNavParamList, T>;
