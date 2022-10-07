@@ -1,7 +1,8 @@
 import {View, Text, Button} from 'react-native';
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+
 import {MainNavProps} from '../navigation/MainNav';
+import {TextInput} from '../components';
 
 export const HospitalList = (props: MainNavProps<'Hospitals'>) => {
   const {navigation} = props;
