@@ -11,13 +11,12 @@ import {Spinner} from '../components/Spinner';
 export const HospitalList = (props: MainNavProps<'Hospitals'>) => {
   const hospitalsList = useAppSelector(store => store.hospitals);
   const {navigation} = props;
-  const dispatch = useAppDispatch(setDeleteHospital);
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = React.useState(false);
 
   // this could be a stand alone custom component
   const confirmDelete = (id: number) => {
     Alert.alert('Are you sure?', 'You going to delete your record', [
-      // can't come up with some better text -)
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),

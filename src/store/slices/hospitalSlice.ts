@@ -37,7 +37,7 @@ const hospitalSlice = createSlice({
           }
         });
       } else {
-        state.hospitals.push(newHospital);
+        state.hospitals.unshift(newHospital);
       }
     },
 
